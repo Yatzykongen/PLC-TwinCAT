@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
+  <POU Name="POU" Id="{432c7f74-8b66-4450-8a66-d7a918564091}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM POU
+VAR
+	running: BOOL;
+	currentError: UDINT;
+	done: BOOL;
+	busy: BOOL;
+	reset: BOOL;
+	position: LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[HAVL.axis.ReadStatus();
+
+HAVL.axisPower(
+	Axis:= HAVL.axis,
+	Enable:= HAVL.enable,
+	Enable_Positive:= HAVL.enable,
+	Enable_Negative:= HAVL.enable,
+	Override:= HAVL.override,
+	BufferMode:= ,
+	Options:= ,
+	Status=> running,
+	Busy=> ,
+	Active=> ,
+	Error=> ,
+	ErrorID=> currentError
+);
+
+HAVL.axisMoveAbsolute(
+	Axis:= HAVL.axis,
+	Execute:= HAVL.enableMove,
+	Position:= HAVL.targetPosition,
+	Velocity:= HAVL.targetVelocity,
+	Acceleration:= ,
+	Deceleration:= ,
+	Jerk:= ,
+	BufferMode:= ,
+	Options:= ,
+	Done=> done,
+	Busy=> busy,
+	Active=> ,
+	CommandAborted=> ,
+	Error=> ,
+	ErrorID=> currentError 
+);
+
+HAVL.axisErrorReset(Axis := HAVL.axis, Execute := reset, Done =>, Error =>, ErrorID => currentError);
+
+HAVL.axisReadActualPosition(Axis := HAVL.axis, Enable := busy, Valid=>, Busy=>, Error=>, ErrorID=>, Position=> position);]]></ST>
+    </Implementation>
+    <LineIds Name="POU">
+      <LineId Id="5" Count="0" />
+      <LineId Id="7" Count="13" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="24" Count="16" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="44" Count="2" />
+      <LineId Id="43" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
+  <GVL Name="HAVL" Id="{aa7e1c0e-5bd7-4903-b644-6392f5122ade}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	axis: AXIS_REF;
+	axisPower: MC_Power;
+	axisMoveAbsolute: MC_MoveAbsolute;
+	axisErrorReset: MC_Reset;
+	axisReadActualPosition: MC_ReadActualPosition;
+	axisMoveManual: MC_Jog;
+	
+	enable: BOOL := FALSE;
+	override: LREAL := 100;
+	enableMove: BOOL := FALSE;
+	targetPosition: LREAL := 0.1;
+	targetVelocity: LREAL := 0.03;
+	motorDriveSubmodeSelect AT%Q*:UDINT := 65;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

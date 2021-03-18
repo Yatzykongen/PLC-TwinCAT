@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
+  <POU Name="HorAxisPosCon" Id="{eec8b9d4-966f-4e21-96d1-987ec7677ccd}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM HorAxisPosCon
+VAR
+	running: BOOL := FALSE;
+	busy: BOOL := TRUE;
+	done: bool := TRUE;
+	
+	fbTimer: TON;
+	tTimerValue     : TIME := T#5S;
+	bStart          : BOOL := TRUE;
+	
+	reset: BOOL := FALSE;
+	
+	currentError: UDINT;
+	
+	start: BOOL := FALSE;
+	position: LREAL;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[HAVL.axis.ReadStatus();
+
+fbTimer(IN := bStart, PT := tTimerValue);
+IF done THEN
+	bStart := TRUE;
+END_IF
+
+IF start AND NOT(busy) THEN
+	HAVL.enable := TRUE;
+ELSIF NOT(start) AND NOT(busy) THEN
+	HAVL.enable := FALSE;
+END_IF
+
+HAVL.axisPower(
+	Axis:= HAVL.axis,
+	Enable:= HAVL.enable,
+	Enable_Positive:= HAVL.enable,
+	Enable_Negative:= HAVL.enable,
+	Override:= HAVL.override,
+	BufferMode:= ,
+	Options:= ,
+	Status=> running,
+	Busy=> ,
+	Active=> ,
+	Error=> ,
+	ErrorID=> currentError
+);
+
+HAVL.axisMoveAbsolute(
+	Axis:= HAVL.axis,
+	Execute:= HAVL.enableMove,
+	Position:= HAVL.targetPosition,
+	Velocity:= HAVL.targetVelocity,
+	Acceleration:= ,
+	Deceleration:= ,
+	Jerk:= ,
+	BufferMode:= ,
+	Options:= ,
+	Done=> done,
+	Busy=> busy,
+	Active=> ,
+	CommandAborted=> ,
+	Error=> ,
+	ErrorID=> currentError 
+);
+
+IF NOT(busy) AND NOT(HAVL.enableMove)AND running AND HAVL.enable AND fbTimer.Q THEN
+	HAVL.enableMove := TRUE;
+	bStart := FALSE;
+	IF HAVL.targetPosition = 0 THEN
+		HAVL.targetPosition := 0.1;
+	ELSE
+		HAVL.targetPosition := 0;
+	END_IF
+END_IF
+
+IF busy AND HAVL.enableMove THEN
+	HAVL.enableMove := FALSE;
+END_IF
+
+HAVL.axisErrorReset(Axis := HAVL.axis, Execute := reset, Done =>, Error =>, ErrorID => currentError);
+
+HAVl.axisReadActualPosition(Axis := HAVL.axis, Enable := busy, Valid=>, Busy=>, Error=>, ErrorID=>, Position=> position);
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="HorAxisPosCon">
+      <LineId Id="32" Count="63" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
