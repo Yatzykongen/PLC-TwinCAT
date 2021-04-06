@@ -26,8 +26,8 @@ VAVL.axisPower(
 
 VAVL.axisMoveManual(
 	Axis:= VAVL.axis,
-	JogForward:= VAVL.ascend,
-	JogBackwards:= VAVL.descend,
+	JogForward:= VAVL.descend,
+	JogBackwards:= VAVL.ascend,
 	Mode:= ,
 	Position:= ,
 	Velocity:= ,

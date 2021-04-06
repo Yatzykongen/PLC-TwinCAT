@@ -21,10 +21,12 @@ HOMING:
 MANUAL:
 	.ManualHorAxis();
 	.ManualRotAxis();
+	.ManualVerAxis();
 	
 POSITION:
 	.PositionHorAxis();
 	.PositionRotAxis();
+	.PositionVerAxis();
 	
 STOP:
 	//SAMELUR
@@ -40,10 +42,12 @@ END_CASE]]></ST>
       <LineId Id="29" Count="0" />
       <LineId Id="18" Count="1" />
       <LineId Id="57" Count="0" />
+      <LineId Id="79" Count="0" />
       <LineId Id="54" Count="0" />
       <LineId Id="56" Count="0" />
       <LineId Id="55" Count="0" />
       <LineId Id="68" Count="0" />
+      <LineId Id="80" Count="0" />
       <LineId Id="38" Count="1" />
       <LineId Id="43" Count="0" />
       <LineId Id="40" Count="0" />
