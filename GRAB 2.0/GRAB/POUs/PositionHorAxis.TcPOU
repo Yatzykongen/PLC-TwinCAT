@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
+  <POU Name="PositionHorAxis" Id="{83c65318-1354-4401-acbf-74659e54a225}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM PositionHorAxis
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[HAVL.axis.ReadStatus();
+
+HAVL.axisPower(
+	Axis:= HAVL.axis,
+	Enable:= HAVL.enable,
+	Enable_Positive:= HAVL.enable,
+	Enable_Negative:= HAVL.enable,
+	Override:= HAVL.override,
+	BufferMode:= ,
+	Options:= ,
+	Status=> HAVL.running,
+	Busy=> ,
+	Active=> ,
+	Error=> ,
+	ErrorID=> HAVL.currentError
+);
+
+HAVL.axisMoveAbsolute(
+	Axis:= HAVL.axis,
+	Execute:= HAVL.enableMove,
+	Position:= HAVL.targetPosition,
+	Velocity:= HAVL.targetVelocity,
+	Acceleration:= ,
+	Deceleration:= ,
+	Jerk:= ,
+	BufferMode:= ,
+	Options:= ,
+	Done=> HAVL.done,
+	Busy=> HAVL.busy,
+	Active=> ,
+	CommandAborted=> ,
+	Error=> ,
+	ErrorID=> HAVL.currentError 
+);
+
+IF HAVL.busy THEN
+	HAVL.axisReadActualPosition(Axis := HAVL.axis, Enable := TRUE, Valid=>, Busy=>, Error=>, ErrorID=>, Position=> HAVL.actualPosition);
+END_IF
+HAVL.actualPositionInt := LREAL_TO_INT(HAVL.actualPosition);
+
+HAVL.axisErrorReset(Axis := HAVL.axis, Execute := HAVL.resetError, Done =>, Error =>, ErrorID => HAVL.currentError);]]></ST>
+    </Implementation>
+    <LineIds Name="PositionHorAxis">
+      <LineId Id="37" Count="1" />
+      <LineId Id="6" Count="30" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="40" Count="5" />
+      <LineId Id="39" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

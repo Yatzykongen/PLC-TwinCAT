@@ -6,12 +6,10 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[Manual();
-Manual_1();]]></ST>
+      <ST><![CDATA[RunGRAB();]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="89" Count="0" />
-      <LineId Id="93" Count="0" />
+      <LineId Id="97" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

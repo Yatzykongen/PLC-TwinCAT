@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
+  <POU Name="Homing" Id="{8836339f-fb55-435b-a3e5-dd7a52c0a178}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Homing
+VAR
+	horAxisHomingDone: BOOL := FALSE;
+	rotAxisHomingDone: BOOL := FALSE;
+	verAxisHomingDone: BOOL := FALSE;
+END_VAR
+VAR CONSTANT 
+    HOME_SNAKE: INT := 1;
+	HOME_SNAKEBOX: INT := 2;
+	HOME_VERTICAL: INT := 3;
+END_VAR ]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// State machine
+CASE GVL.homingState OF
+HOME_SNAKE:
+	HAVL.axis.ReadStatus();
+	
+	IF horAxisHomingDone THEN
+		HAVL.enable := FALSE;
+		GVL.homingState := 2;
+	ELSE
+		HAVL.enable := TRUE;
+	END_IF
+	
+	HAVL.axisPower(
+		Axis:= HAVL.axis,
+		Enable:= HAVL.enable,
+		Enable_Positive:= HAVL.enable,
+		Enable_Negative:= HAVL.enable,
+		Override:= HAVL.override,
+		BufferMode:= ,
+		Options:= ,
+		Status=> HAVL.running,
+		Busy=> ,
+		Active=> ,
+		Error=> ,
+		ErrorID=> HAVL.currentError
+	);
+	
+	HAVL.axisHome(
+		Axis:= HAVL.axis,
+		Execute:= HAVL.execute,
+		Position:= HAVL.homePosition,
+		HomingMode:= MC_DefaultHoming,
+		BufferMode:= ,
+		Options:= ,
+		bCalibrationCam:= HAVL.endStop,
+		Done=> HAVL.done,
+		Busy=> HAVL.busy,
+		Active=> ,
+		CommandAborted=> ,
+		Error=> ,
+		ErrorID=> HAVL.currentError
+	);
+	
+	IF HAVL.running AND NOT(HAVL.busy) AND NOT(horAxisHomingDone) THEN
+		HAVL.execute := TRUE;
+	ELSE
+		HAVL.execute := FALSE;
+	END_IF
+	
+	IF HAVL.done THEN
+		horAxisHomingDone := TRUE;
+		RAVL.enable := TRUE;
+	END_IF
+		
+HOME_SNAKEBOX:
+	// do some invers motor shit	
+	horAxisHomingDone := FALSE;
+	
+	RAVL.axis.ReadStatus();
+	
+	IF rotAxisHomingDone THEN
+		RAVL.enable := FALSE;
+		GVL.homingState := 0;
+	ELSE
+		RAVL.enable := TRUE;
+	END_IF
+	
+	RAVL.axisPower(
+		Axis:= RAVL.axis,
+		Enable:= RAVL.enable,
+		Enable_Positive:= RAVL.enable,
+		Enable_Negative:= RAVL.enable,
+		Override:= RAVL.override,
+		BufferMode:= ,
+		Options:= ,
+		Status=> RAVL.running,
+		Busy=> ,
+		Active=> ,
+		Error=> ,
+		ErrorID=> RAVL.currentError
+	);
+	
+	RAVL.axisHome(
+		Axis:= RAVL.axis,
+		Execute:= RAVL.execute,
+		Position:= RAVL.homePosition,
+		HomingMode:= MC_DefaultHoming,
+		BufferMode:= ,
+		Options:= ,
+		bCalibrationCam:= RAVL.endStop,
+		Done=> RAVL.done,
+		Busy=> RAVL.busy,
+		Active=> ,
+		CommandAborted=> ,
+		Error=> ,
+		ErrorID=> RAVL.currentError
+	);
+	
+	
+	
+	IF RAVL.running AND NOT(RAVL.busy) AND NOT(rotAxisHomingDone) THEN
+		RAVL.execute := TRUE;
+	ELSE
+		RAVL.execute := FALSE;
+	END_IF
+	
+	IF RAVL.done THEN
+		rotAxisHomingDone := TRUE;
+		//VAVL.enable := TRUE;
+	END_IF
+	
+HOME_VERTICAL:
+	//SAMELUR
+	rotAxisHomingDone := FALSE;
+	
+	VAVL.axis.ReadStatus();
+	
+	IF horAxisHomingDone THEN
+		VAVL.enable := FALSE;
+		GVL.homingState := 1;
+		GVL.stateGRAB := 0;
+	ELSE
+		VAVL.enable := TRUE;
+	END_IF
+	
+	VAVL.axisPower(
+		Axis:= VAVL.axis,
+		Enable:= VAVL.enable,
+		Enable_Positive:= VAVL.enable,
+		Enable_Negative:= VAVL.enable,
+		Override:= VAVL.override,
+		BufferMode:= ,
+		Options:= ,
+		Status=> VAVL.running,
+		Busy=> ,
+		Active=> ,
+		Error=> ,
+		ErrorID=> VAVL.currentError
+	);
+	
+	VAVL.axisHome(
+		Axis:= VAVL.axis,
+		Execute:= VAVL.execute,
+		Position:= VAVL.homePosition,
+		HomingMode:= MC_DefaultHoming,
+		BufferMode:= ,
+		Options:= ,
+		bCalibrationCam:= VAVL.endStopBottom,
+		Done=> VAVL.done,
+		Busy=> VAVL.busy,
+		Active=> ,
+		CommandAborted=> ,
+		Error=> ,
+		ErrorID=> VAVL.currentError
+	);
+	
+	IF VAVL.running AND NOT(VAVL.busy) AND NOT(verAxisHomingDone) THEN
+		VAVL.execute := TRUE;
+	ELSE
+		VAVL.execute := FALSE;
+	END_IF
+	
+	IF VAVL.done THEN
+		verAxisHomingDone := TRUE;
+	END_IF
+
+ELSE
+	// GRAB waiting for command
+END_CASE]]></ST>
+    </Implementation>
+    <LineIds Name="Homing">
+      <LineId Id="8" Count="2" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="143" Count="2" />
+      <LineId Id="152" Count="0" />
+      <LineId Id="148" Count="1" />
+      <LineId Id="146" Count="0" />
+      <LineId Id="133" Count="0" />
+      <LineId Id="28" Count="12" />
+      <LineId Id="11" Count="1" />
+      <LineId Id="41" Count="9" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="54" Count="3" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="60" Count="1" />
+      <LineId Id="150" Count="1" />
+      <LineId Id="62" Count="0" />
+      <LineId Id="65" Count="2" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="13" Count="1" />
+      <LineId Id="80" Count="0" />
+      <LineId Id="153" Count="0" />
+      <LineId Id="82" Count="1" />
+      <LineId Id="160" Count="4" />
+      <LineId Id="158" Count="1" />
+      <LineId Id="84" Count="34" />
+      <LineId Id="155" Count="1" />
+      <LineId Id="119" Count="4" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="15" Count="2" />
+      <LineId Id="167" Count="0" />
+      <LineId Id="226" Count="0" />
+      <LineId Id="177" Count="4" />
+      <LineId Id="228" Count="0" />
+      <LineId Id="182" Count="42" />
+      <LineId Id="165" Count="0" />
+      <LineId Id="18" Count="2" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

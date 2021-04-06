@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
+  <POU Name="ManualHorAxis" Id="{880819fa-648e-4916-b2f4-018c51c85792}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM ManualHorAxis
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[HAVL.axis.ReadStatus();
+
+IF HAVL.extend AND NOT(HAVL.endStop) THEN
+	HAVL.lastExtend := TRUE;
+	HAVL.lastRetract := FALSE;
+END_IF
+
+IF HAVL.retract AND NOT(HAVL.endStop) THEN
+	HAVL.lastExtend := FALSE;
+	HAVL.lastRetract := TRUE;
+END_IF
+
+HAVL.axisPower(
+	Axis:= HAVL.axis,
+	Enable:= HAVL.enable,
+	Enable_Positive:= HAVL.enable,
+	Enable_Negative:= HAVL.enable,
+	Override:= HAVL.override,
+	BufferMode:= ,
+	Options:= ,
+	Status=> HAVL.running,
+	Busy=> ,
+	Active=> ,
+	Error=> ,
+	ErrorID=> HAVL.currentError
+);
+
+HAVL.axisMoveManual(
+	Axis:= HAVL.axis,
+	JogForward:= (HAVL.extend AND (NOT(HAVL.endStop) OR (HAVL.endStop AND HAVL.lastRetract))),
+	JogBackwards:= (HAVL.retract AND (NOT(HAVL.endStop) OR (HAVL.endStop AND HAVL.lastExtend))),
+	Mode:= ,
+	Position:= ,
+	Velocity:= ,
+	Acceleration:= ,
+	Deceleration:= ,
+	Jerk:= ,
+	Done=> HAVL.done,
+	Busy=> HAVL.busy,
+	Active=> ,
+	CommandAborted=> ,
+	Error=> ,
+	ErrorID=> HAVL.currentError
+);
+	
+IF HAVL.busy THEN
+	HAVL.axisReadActualPosition(Axis := HAVL.axis, Enable := TRUE, Valid=>, Busy=>, Error=>, ErrorID=>, Position=> HAVL.actualPosition);
+END_IF
+HAVL.actualPositionInt := LREAL_TO_INT(HAVL.actualPosition);
+
+HAVL.axisErrorReset(Axis := HAVL.axis, Execute := HAVL.resetError, Done =>, Error =>, ErrorID => HAVL.currentError);]]></ST>
+    </Implementation>
+    <LineIds Name="ManualHorAxis">
+      <LineId Id="117" Count="0" />
+      <LineId Id="162" Count="0" />
+      <LineId Id="118" Count="0" />
+      <LineId Id="163" Count="0" />
+      <LineId Id="165" Count="0" />
+      <LineId Id="164" Count="0" />
+      <LineId Id="167" Count="3" />
+      <LineId Id="166" Count="0" />
+      <LineId Id="119" Count="38" />
+      <LineId Id="67" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

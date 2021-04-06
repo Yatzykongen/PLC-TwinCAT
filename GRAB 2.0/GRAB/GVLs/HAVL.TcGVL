@@ -9,6 +9,7 @@ VAR_GLOBAL
 	axisErrorReset: MC_Reset;
 	axisReadActualPosition: MC_ReadActualPosition;
 	axisMoveManual: MC_Jog;
+	axisHome: MC_Home;
 	
 	enable: BOOL := FALSE;
 	override: LREAL := 100;
@@ -19,12 +20,21 @@ VAR_GLOBAL
 	actualPositionInt: INT;
 	motorDriveSubmodeSelect AT%Q*:UDINT := 65;
 	
-	forward: BOOL := FALSE;
-	backwards: BOOL := FALSE;
+	execute: BOOL := FALSE;
+	extend: BOOL := FALSE;
+	retract: BOOL := FALSE;
 	busy: BOOL := FALSE;
 	running: BOOL := FALSE;
 	done: BOOL := FALSE;
 	resetError: BOOL := FALSE;
+	currentError: UDINT;
+	
+	lastExtend: BOOL := FALSE;
+	lastRetract: BOOL := FALSE;
+	
+	endStop AT %I*: BOOL;
+	
+	homePosition: LREAL := 0;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

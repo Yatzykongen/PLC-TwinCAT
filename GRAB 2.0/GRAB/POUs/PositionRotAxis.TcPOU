@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
+  <POU Name="PositionRotAxis" Id="{50b653f0-9bda-4f6f-b9d9-0622c9a75caf}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM PositionRotAxis
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[RAVL.axis.ReadStatus();
+
+RAVL.axisPower(
+	Axis:= RAVL.axis,
+	Enable:= RAVL.enable,
+	Enable_Positive:= RAVL.enable,
+	Enable_Negative:= RAVL.enable,
+	Override:= RAVL.override,
+	BufferMode:= ,
+	Options:= ,
+	Status=> RAVL.running,
+	Busy=> ,
+	Active=> ,
+	Error=> ,
+	ErrorID=> RAVL.currentError
+);
+
+RAVL.axisMoveAbsolute(
+	Axis:= RAVL.axis,
+	Execute:= RAVL.enableMove,
+	Position:= RAVL.targetPosition,
+	Velocity:= RAVL.targetVelocity,
+	Acceleration:= ,
+	Deceleration:= ,
+	Jerk:= ,
+	BufferMode:= ,
+	Options:= ,
+	Done=> RAVL.done,
+	Busy=> RAVL.busy,
+	Active=> ,
+	CommandAborted=> ,
+	Error=> ,
+	ErrorID=> RAVL.currentError 
+);
+
+IF RAVL.busy THEN
+	RAVL.axisReadActualPosition(Axis := RAVL.axis, Enable := TRUE, Valid=>, Busy=>, Error=>, ErrorID=>, Position=> RAVL.actualPosition);
+END_IF
+RAVL.actualPositionInt := LREAL_TO_INT(RAVL.actualPosition);
+
+RAVL.axisErrorReset(Axis := RAVL.axis, Execute := RAVL.resetError, Done =>, Error =>, ErrorID => RAVL.currentError);]]></ST>
+    </Implementation>
+    <LineIds Name="PositionRotAxis">
+      <LineId Id="9" Count="39" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

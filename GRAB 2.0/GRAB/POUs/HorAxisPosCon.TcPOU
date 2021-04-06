@@ -85,7 +85,9 @@ HAVL.axisErrorReset(Axis := HAVL.axis, Execute := reset, Done =>, Error =>, Erro
 HAVL.axisReadActualPosition(Axis := HAVL.axis, Enable := busy, Valid=>, Busy=>, Error=>, ErrorID=>, Position=> position);]]></ST>
     </Implementation>
     <LineIds Name="HorAxisPosCon">
-      <LineId Id="32" Count="62" />
+      <LineId Id="32" Count="44" />
+      <LineId Id="146" Count="8" />
+      <LineId Id="86" Count="8" />
     </LineIds>
   </POU>
 </TcPlcObject>

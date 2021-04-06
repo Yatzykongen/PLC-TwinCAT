@@ -6,21 +6,32 @@ VAR
 
 END_VAR
 VAR CONSTANT 
-    EXTEND_SNAKE: INT := 1;
-	RETRACT_SNAKE: INT := 2;
+    HOMING: INT := 1;
+	MANUAL: INT := 2;
+	POSITION: INT := 3;
+	STOP: INT := 4;
 END_VAR 
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[// State machine
-(*CASE GVL.stateGRAB OF
-EXTEND_SNAKE:
-	// do some motor shit
+CASE GVL.stateGRAB OF
+HOMING:
+	.Homing();
 	
-RETRACT_SNAKE:
-	// do some invers motor shit	
+MANUAL:
+	.ManualHorAxis();
+	.ManualRotAxis();
+	
+POSITION:
+	.PositionHorAxis();
+	.PositionRotAxis();
+	
+STOP:
+	//SAMELUR
+
 ELSE
 	// GRAB waiting for command
-END_CASE*)]]></ST>
+END_CASE]]></ST>
     </Implementation>
     <LineIds Name="RunGRAB">
       <LineId Id="5" Count="1" />
@@ -28,6 +39,14 @@ END_CASE*)]]></ST>
       <LineId Id="13" Count="0" />
       <LineId Id="29" Count="0" />
       <LineId Id="18" Count="1" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="38" Count="1" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="40" Count="0" />
       <LineId Id="14" Count="0" />
       <LineId Id="16" Count="0" />
       <LineId Id="9" Count="0" />

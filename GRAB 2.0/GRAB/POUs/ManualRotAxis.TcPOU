@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
+  <POU Name="ManualRotAxis" Id="{e5fa7945-e802-46a9-800f-6db9cf40bcd4}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM ManualRotAxis
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[RAVL.axis.ReadStatus();
+
+IF RAVL.clockwise AND NOT(RAVL.endStop) THEN
+	RAVL.lastClockwise := TRUE;
+	RAVL.lastCounterClockwise := FALSE;
+END_IF
+
+IF RAVL.counterClockwise AND NOT(RAVL.endStop) THEN
+	RAVL.lastClockwise := FALSE;
+	RAVL.lastCounterClockwise := TRUE;
+END_IF
+
+RAVL.axisPower(
+	Axis:= RAVL.axis,
+	Enable:= RAVL.enable,
+	Enable_Positive:= RAVL.enable,
+	Enable_Negative:= RAVL.enable,
+	Override:= RAVL.override,
+	BufferMode:= ,
+	Options:= ,
+	Status=> RAVL.running,
+	Busy=> ,
+	Active=> ,
+	Error=> ,
+	ErrorID=> RAVL.currentError
+);
+
+RAVL.axisMoveManual(
+	Axis:= RAVL.axis,
+	JogForward:= (RAVL.clockwise AND (NOT(RAVL.endStop) OR (RAVL.endStop AND RAVL.lastCounterClockwise))),
+	JogBackwards:= (RAVL.counterClockwise AND (NOT(RAVL.endStop) OR (RAVL.endStop AND RAVL.lastClockwise))),
+	Mode:= ,
+	Position:= ,
+	Velocity:= ,
+	Acceleration:= ,
+	Deceleration:= ,
+	Jerk:= ,
+	Done=> RAVL.done,
+	Busy=> RAVL.busy,
+	Active=> ,
+	CommandAborted=> ,
+	Error=> ,
+	ErrorID=> RAVL.currentError
+);
+
+IF RAVL.busy THEN
+	RAVL.axisReadActualPosition(Axis := RAVL.axis, Enable := TRUE, Valid=>, Busy=>, Error=>, ErrorID=>, Position=> RAVL.actualPosition);
+END_IF
+RAVL.actualPositionInt := LREAL_TO_INT(RAVL.actualPosition);
+
+RAVL.axisErrorReset(Axis := RAVL.axis, Execute := RAVL.resetError, Done =>, Error =>, ErrorID => RAVL.currentError);]]></ST>
+    </Implementation>
+    <LineIds Name="ManualRotAxis">
+      <LineId Id="21" Count="0" />
+      <LineId Id="117" Count="5" />
+      <LineId Id="126" Count="2" />
+      <LineId Id="87" Count="0" />
+      <LineId Id="22" Count="13" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="40" Count="2" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="62" Count="2" />
+      <LineId Id="113" Count="0" />
+      <LineId Id="68" Count="1" />
+      <LineId Id="96" Count="3" />
+      <LineId Id="67" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
+  <POU Name="PositionVerAxis" Id="{1b6ad884-2529-406e-ba25-f2207e3320ae}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM PositionVerAxis
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[VAVL.axis.ReadStatus();
+
+VAVL.axisPower(
+	Axis:= VAVL.axis,
+	Enable:= VAVL.enable,
+	Enable_Positive:= VAVL.enable,
+	Enable_Negative:= VAVL.enable,
+	Override:= VAVL.override,
+	BufferMode:= ,
+	Options:= ,
+	Status=> VAVL.running,
+	Busy=> ,
+	Active=> ,
+	Error=> ,
+	ErrorID=> VAVL.currentError
+);
+
+VAVL.axisMoveAbsolute(
+	Axis:= VAVL.axis,
+	Execute:= VAVL.enableMove,
+	Position:= VAVL.targetPosition,
+	Velocity:= VAVL.targetVelocity,
+	Acceleration:= ,
+	Deceleration:= ,
+	Jerk:= ,
+	BufferMode:= ,
+	Options:= ,
+	Done=> VAVL.done,
+	Busy=> VAVL.busy,
+	Active=> ,
+	CommandAborted=> ,
+	Error=> ,
+	ErrorID=> VAVL.currentError 
+);
+
+IF VAVL.busy THEN
+	VAVL.axisReadActualPosition(Axis := VAVL.axis, Enable := TRUE, Valid=>, Busy=>, Error=>, ErrorID=>, Position=> VAVL.actualPosition);
+END_IF
+VAVL.actualPositionInt := LREAL_TO_INT(VAVL.actualPosition);
+
+VAVL.axisErrorReset(Axis := VAVL.axis, Execute := VAVL.resetError, Done =>, Error =>, ErrorID => VAVL.currentError);]]></ST>
+    </Implementation>
+    <LineIds Name="PositionVerAxis">
+      <LineId Id="6" Count="39" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

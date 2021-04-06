@@ -32,10 +32,17 @@
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
+    <Compile Include="GVLs\VAVL.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
     <Compile Include="ImagePool.TcIPO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="PlcTask.TcTTO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Homing.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\HorAxisPosCon.TcPOU">
@@ -44,10 +51,22 @@
     <Compile Include="POUs\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Manual.TcPOU">
+    <Compile Include="POUs\ManualHorAxis.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Manual_1.TcPOU">
+    <Compile Include="POUs\ManualRotAxis.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\ManualVerAxis.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\PositionHorAxis.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\PositionRotAxis.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\PositionVerAxis.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\POU.TcPOU">
