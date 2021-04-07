@@ -1395,7 +1395,7 @@ External Setpoint Generation:
 				<SvbTask Priority="8" CycleTime="100000" AmsPort="511">
 					<Name>NC-Task 1 SVB</Name>
 				</SvbTask>
-				<Axis Id="3" CreateSymbols="true" AxisType="1">
+				<Axis Id="3" CreateSymbols="true" AxisType="1" GroupId="1">
 					<Name>HorizontalAxis</Name>
 					<AxisPara>
 						<Dynamic AccelerationMaximum="2000" DecelerationMaximum="2000" Acceleration="500" Deceleration="500" Jerk="5000"/>
@@ -1544,7 +1544,7 @@ External Setpoint Generation:
 						</Var>
 					</Vars>
 				</Axis>
-				<Axis Id="4" CreateSymbols="true" AxisType="1">
+				<Axis Id="4" CreateSymbols="true" AxisType="1" GroupId="2">
 					<Name>RotationAxis</Name>
 					<AxisPara>
 						<General UnitName="Degree"/>
@@ -1696,17 +1696,15 @@ External Setpoint Generation:
 						</Var>
 					</Vars>
 				</Axis>
-				<Axis Id="5" CreateSymbols="true" AxisType="1">
+				<Axis Id="5" CreateSymbols="true" AxisType="1" GroupId="3">
 					<Name>VerticalAxis</Name>
 					<AxisPara>
-						<Dynamic AccelerationMaximum="30" DecelerationMaximum="30" Acceleration="20" Deceleration="20" Jerk="5000"/>
-						<Velo RefSearch="80" RefSync="20" SlowManual="2" FastManual="5" Maximum="11"/>
-						<OtherSettings AllowMotionCmdToSlave="true" PulseDistancePos="1" PulseDistanceNeg="1"/>
-						<ParameterChanged>8</ParameterChanged>
-						<ParameterChanged>9</ParameterChanged>
+						<Dynamic AccelerationMaximum="2000" DecelerationMaximum="2000" Acceleration="500" Deceleration="500" Jerk="5000"/>
+						<Velo RefSearch="80" RefSync="20" SlowManual="25" FastManual="30" Maximum="105.31"/>
+						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="19">
-						<EncPara ScaleFactorNumerator="0.00024" MaxCount="#xffffffff">
+						<EncPara ScaleFactorNumerator="0.004208" Inverse="true" MaxCount="#xffffffff">
 							<SoftEndMinControl Enable="true" Range="-100"/>
 							<SoftEndMaxControl Enable="true" Range="700"/>
 							<Inc RefSearchInverse="true" RefSyncInverse="false" RefSoftSyncMask="#x00000fff"/>
@@ -1770,8 +1768,8 @@ External Setpoint Generation:
 						</Vars>
 					</Encoder>
 					<Drive Name="Drive" DrvType="16">
-						<DrvPara MaxCount="#xffffffff" DriveControlDWord="#x00020000">
-							<Analog VeloReferenz="10" TorqueSetpointScale="10" ScaleFactorActTorque="0.1"/>
+						<DrvPara Inverse="true" MaxCount="#xffffffff" DriveControlDWord="#x00020000">
+							<Analog VeloReferenz="105.309649" TorqueSetpointScale="10" ScaleFactorActTorque="0.1"/>
 							<TimeComp TaskDelayCycles="1"/>
 						</DrvPara>
 						<Vars VarGrpType="1">
