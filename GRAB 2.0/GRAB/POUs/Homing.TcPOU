@@ -75,7 +75,7 @@ HOME_SNAKEBOX:
 	
 	IF rotAxisHomingDone THEN
 		RAVL.enable := FALSE;
-		GVL.homingState := 0;
+		GVL.homingState := 3;
 	ELSE
 		RAVL.enable := TRUE;
 	END_IF
@@ -130,7 +130,7 @@ HOME_VERTICAL:
 	
 	VAVL.axis.ReadStatus();
 	
-	IF horAxisHomingDone THEN
+	IF verAxisHomingDone THEN
 		VAVL.enable := FALSE;
 		GVL.homingState := 1;
 		GVL.stateGRAB := 0;
@@ -160,7 +160,7 @@ HOME_VERTICAL:
 		HomingMode:= MC_DefaultHoming,
 		BufferMode:= ,
 		Options:= ,
-		bCalibrationCam:= VAVL.endStopBottom,
+		bCalibrationCam:= NOT(VAVL.endStopBottom),
 		Done=> VAVL.done,
 		Busy=> VAVL.busy,
 		Active=> ,

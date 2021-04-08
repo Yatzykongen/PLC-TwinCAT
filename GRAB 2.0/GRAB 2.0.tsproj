@@ -1399,7 +1399,7 @@ External Setpoint Generation:
 					<Name>HorizontalAxis</Name>
 					<AxisPara>
 						<Dynamic AccelerationMaximum="2000" DecelerationMaximum="2000" Acceleration="500" Deceleration="500" Jerk="5000"/>
-						<Velo RefSearch="80" RefSync="20" FastManual="300" Maximum="105.31"/>
+						<Velo RefSearch="80" RefSync="20" SlowManual="20" FastManual="80" Maximum="105.31"/>
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="19">
@@ -1526,6 +1526,7 @@ External Setpoint Generation:
 					</Drive>
 					<Controller Name="Ctrl" CtrType="1">
 						<CtrPara PriorControlFactor="1">
+							<PosDiffControl Range="10"/>
 							<Observer BandWidth="20"/>
 						</CtrPara>
 					</Controller>
@@ -1700,7 +1701,7 @@ External Setpoint Generation:
 					<Name>VerticalAxis</Name>
 					<AxisPara>
 						<Dynamic AccelerationMaximum="50" DecelerationMaximum="50" Acceleration="20" Deceleration="40" Jerk="5000"/>
-						<Velo RefSearch="80" RefSync="20" SlowManual="25" FastManual="50" Maximum="105.31"/>
+						<Velo RefSearch="50" RefSync="10" SlowManual="25" FastManual="50" Maximum="105.31"/>
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="19">

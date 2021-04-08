@@ -1399,8 +1399,10 @@ External Setpoint Generation:
 					<Name>HorizontalAxis</Name>
 					<AxisPara>
 						<Dynamic AccelerationMaximum="2000" DecelerationMaximum="2000" Acceleration="500" Deceleration="500" Jerk="5000"/>
-						<Velo RefSearch="80" RefSync="20" FastManual="300" Maximum="105.31"/>
+						<Velo RefSearch="80" RefSync="20" SlowManual="20" FastManual="80" Maximum="105.31"/>
 						<OtherSettings AllowMotionCmdToSlave="true"/>
+						<ParameterChanged>8</ParameterChanged>
+						<ParameterChanged>9</ParameterChanged>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="19">
 						<EncPara ScaleFactorNumerator="0.004208" MaxCount="#xffffffff">
@@ -1526,6 +1528,7 @@ External Setpoint Generation:
 					</Drive>
 					<Controller Name="Ctrl" CtrType="1">
 						<CtrPara PriorControlFactor="1">
+							<PosDiffControl Range="10"/>
 							<Observer BandWidth="20"/>
 						</CtrPara>
 					</Controller>
@@ -1699,8 +1702,8 @@ External Setpoint Generation:
 				<Axis Id="5" CreateSymbols="true" AxisType="1" GroupId="3">
 					<Name>VerticalAxis</Name>
 					<AxisPara>
-						<Dynamic AccelerationMaximum="2000" DecelerationMaximum="2000" Acceleration="500" Deceleration="500" Jerk="5000"/>
-						<Velo RefSearch="80" RefSync="20" SlowManual="25" FastManual="30" Maximum="105.31"/>
+						<Dynamic AccelerationMaximum="50" DecelerationMaximum="50" Acceleration="20" Deceleration="40" Jerk="5000"/>
+						<Velo RefSearch="50" RefSync="10" SlowManual="25" FastManual="50" Maximum="105.31"/>
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="19">
@@ -1769,7 +1772,7 @@ External Setpoint Generation:
 					</Encoder>
 					<Drive Name="Drive" DrvType="16">
 						<DrvPara Inverse="true" MaxCount="#xffffffff" DriveControlDWord="#x00020000">
-							<Analog VeloReferenz="105.309649" TorqueSetpointScale="10" ScaleFactorActTorque="0.1"/>
+							<Analog VeloReferenz="100" TorqueSetpointScale="10" ScaleFactorActTorque="0.1"/>
 							<TimeComp TaskDelayCycles="1"/>
 						</DrvPara>
 						<Vars VarGrpType="1">
