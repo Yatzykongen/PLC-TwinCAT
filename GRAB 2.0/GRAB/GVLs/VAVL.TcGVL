@@ -14,8 +14,8 @@ VAR_GLOBAL
 	enable: BOOL := FALSE;
 	override: LREAL := 100;
 	enableMove: BOOL := FALSE;
-	targetPosition: LREAL := 500;
-	targetVelocity: LREAL := 50;
+	targetPosition: LREAL := 0;
+	targetVelocity: LREAL := 200;
 	actualPosition: LREAL;
 	actualPositionInt: INT;
 	motorDriveSubmodeSelect AT%Q*:UDINT := 68;

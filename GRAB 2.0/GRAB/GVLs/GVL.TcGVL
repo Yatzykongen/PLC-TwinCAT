@@ -8,6 +8,7 @@ VAR_GLOBAL
 	currentStateGRAB: INT;
 	
 	homingState: INT := 1;
+	homingDone: BOOL := FALSE;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

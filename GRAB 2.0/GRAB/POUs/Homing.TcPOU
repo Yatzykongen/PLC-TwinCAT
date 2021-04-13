@@ -6,6 +6,8 @@ VAR
 	horAxisHomingDone: BOOL := FALSE;
 	rotAxisHomingDone: BOOL := FALSE;
 	verAxisHomingDone: BOOL := FALSE;
+	lastTime: TIME;
+	timerOn: BOOL := FALSE;
 END_VAR
 VAR CONSTANT 
     HOME_SNAKE: INT := 1;
@@ -14,10 +16,12 @@ VAR CONSTANT
 END_VAR ]]></Declaration>
     <Implementation>
       <ST><![CDATA[// State machine
+HAVL.axis.ReadStatus();
+RAVL.axis.ReadStatus();
+VAVL.axis.ReadStatus();
 CASE GVL.homingState OF
 HOME_SNAKE:
-	HAVL.axis.ReadStatus();
-	
+	timerOn:= FALSE;
 	IF horAxisHomingDone THEN
 		HAVL.enable := FALSE;
 		GVL.homingState := 2;
@@ -71,8 +75,6 @@ HOME_SNAKEBOX:
 	// do some invers motor shit	
 	horAxisHomingDone := FALSE;
 	
-	RAVL.axis.ReadStatus();
-	
 	IF rotAxisHomingDone THEN
 		RAVL.enable := FALSE;
 		GVL.homingState := 3;
@@ -111,8 +113,6 @@ HOME_SNAKEBOX:
 		ErrorID=> RAVL.currentError
 	);
 	
-	
-	
 	IF RAVL.running AND NOT(RAVL.busy) AND NOT(rotAxisHomingDone) THEN
 		RAVL.execute := TRUE;
 	ELSE
@@ -128,12 +128,12 @@ HOME_VERTICAL:
 	//SAMELUR
 	rotAxisHomingDone := FALSE;
 	
-	VAVL.axis.ReadStatus();
-	
 	IF verAxisHomingDone THEN
 		VAVL.enable := FALSE;
 		GVL.homingState := 1;
 		GVL.stateGRAB := 0;
+		GVL.homingDone := TRUE;
+		verAxisHomingDone := FALSE;
 	ELSE
 		VAVL.enable := TRUE;
 	END_IF
@@ -169,8 +169,14 @@ HOME_VERTICAL:
 		ErrorID=> VAVL.currentError
 	);
 	
-	IF VAVL.running AND NOT(VAVL.busy) AND NOT(verAxisHomingDone) THEN
+	IF VAVL.running AND NOT(timerOn) AND NOT(VAVL.busy) AND NOT(verAxisHomingDone) THEN
+		lastTime := TIME() + T#3S;
+		timerOn := TRUE;
+	END_IF
+	
+	IF VAVL.running AND NOT(VAVL.busy) AND NOT(verAxisHomingDone) AND (TIME()>lastTime) AND timerOn THEN
 		VAVL.execute := TRUE;
+		timerOn := FALSE;
 	ELSE
 		VAVL.execute := FALSE;
 	END_IF
@@ -184,9 +190,12 @@ ELSE
 END_CASE]]></ST>
     </Implementation>
     <LineIds Name="Homing">
-      <LineId Id="8" Count="2" />
-      <LineId Id="25" Count="0" />
-      <LineId Id="143" Count="2" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="259" Count="1" />
+      <LineId Id="258" Count="0" />
+      <LineId Id="9" Count="1" />
+      <LineId Id="293" Count="0" />
+      <LineId Id="144" Count="1" />
       <LineId Id="152" Count="0" />
       <LineId Id="148" Count="1" />
       <LineId Id="146" Count="0" />
@@ -206,20 +215,29 @@ END_CASE]]></ST>
       <LineId Id="53" Count="0" />
       <LineId Id="13" Count="1" />
       <LineId Id="80" Count="0" />
-      <LineId Id="153" Count="0" />
-      <LineId Id="82" Count="1" />
+      <LineId Id="83" Count="0" />
       <LineId Id="160" Count="4" />
       <LineId Id="158" Count="1" />
-      <LineId Id="84" Count="34" />
+      <LineId Id="84" Count="29" />
+      <LineId Id="116" Count="2" />
       <LineId Id="155" Count="1" />
       <LineId Id="119" Count="4" />
       <LineId Id="81" Count="0" />
       <LineId Id="15" Count="2" />
       <LineId Id="167" Count="0" />
-      <LineId Id="226" Count="0" />
-      <LineId Id="177" Count="4" />
+      <LineId Id="178" Count="3" />
       <LineId Id="228" Count="0" />
-      <LineId Id="182" Count="42" />
+      <LineId Id="239" Count="1" />
+      <LineId Id="182" Count="34" />
+      <LineId Id="283" Count="0" />
+      <LineId Id="285" Count="0" />
+      <LineId Id="290" Count="0" />
+      <LineId Id="286" Count="0" />
+      <LineId Id="284" Count="0" />
+      <LineId Id="217" Count="0" />
+      <LineId Id="282" Count="0" />
+      <LineId Id="292" Count="0" />
+      <LineId Id="219" Count="5" />
       <LineId Id="165" Count="0" />
       <LineId Id="18" Count="2" />
       <LineId Id="5" Count="0" />

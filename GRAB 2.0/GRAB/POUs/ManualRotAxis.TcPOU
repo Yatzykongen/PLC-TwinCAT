@@ -35,8 +35,8 @@ RAVL.axisPower(
 
 RAVL.axisMoveManual(
 	Axis:= RAVL.axis,
-	JogForward:= (RAVL.clockwise AND (NOT(RAVL.endStop) OR (RAVL.endStop AND RAVL.lastCounterClockwise))),
-	JogBackwards:= (RAVL.counterClockwise AND (NOT(RAVL.endStop) OR (RAVL.endStop AND RAVL.lastClockwise))),
+	JogForward:= (RAVL.counterClockwise AND (NOT(RAVL.endStop) OR (RAVL.endStop AND RAVL.lastClockwise))),
+	JogBackwards:= (RAVL.clockwise AND (NOT(RAVL.endStop) OR (RAVL.endStop AND RAVL.lastCounterClockwise))),
 	Mode:= ,
 	Position:= ,
 	Velocity:= ,
