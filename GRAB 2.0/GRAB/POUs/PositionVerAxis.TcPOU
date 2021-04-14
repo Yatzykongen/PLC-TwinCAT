@@ -20,7 +20,7 @@ VAVL.axisPower(
 	Busy=> ,
 	Active=> ,
 	Error=> ,
-	ErrorID=> VAVL.currentError
+	ErrorID=> VAVL.currentErrorPower
 );
 
 VAVL.axisMoveAbsolute(
@@ -38,7 +38,7 @@ VAVL.axisMoveAbsolute(
 	Active=> ,
 	CommandAborted=> ,
 	Error=> ,
-	ErrorID=> VAVL.currentError 
+	ErrorID=> VAVL.currentErrorCommand 
 );
 
 IF VAVL.busy THEN

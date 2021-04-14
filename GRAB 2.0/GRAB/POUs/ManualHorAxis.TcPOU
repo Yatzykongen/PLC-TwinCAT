@@ -30,7 +30,7 @@ HAVL.axisPower(
 	Busy=> ,
 	Active=> ,
 	Error=> ,
-	ErrorID=> HAVL.currentError
+	ErrorID=> HAVL.currentErrorPower
 );
 
 HAVL.axisMoveManual(
@@ -48,7 +48,7 @@ HAVL.axisMoveManual(
 	Active=> ,
 	CommandAborted=> ,
 	Error=> ,
-	ErrorID=> HAVL.currentError
+	ErrorID=> HAVL.currentErrorCommand
 );
 	
 IF HAVL.busy THEN

@@ -1700,15 +1700,20 @@ External Setpoint Generation:
 				<Axis Id="5" CreateSymbols="true" AxisType="1" GroupId="3">
 					<Name>VerticalAxis</Name>
 					<AxisPara>
-						<Dynamic AccelerationMaximum="50" DecelerationMaximum="50" Acceleration="60" Deceleration="120" Jerk="5000"/>
+						<Dynamic AccelerationMaximum="50" DecelerationMaximum="50" Acceleration="100" Deceleration="120" Jerk="6000"/>
 						<Velo RefSearch="50" RefSync="10" SlowManual="200" FastManual="200" Maximum="300"/>
+						<PositionAreaControl Range="10"/>
+						<PEHControl Time="10"/>
 						<OtherSettings AllowMotionCmdToSlave="true"/>
+						<ParameterChanged>257</ParameterChanged>
+						<ParameterChanged>259</ParameterChanged>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="19">
 						<EncPara ScaleFactorNumerator="0.004208" Inverse="true" MaxCount="#xffffffff">
 							<SoftEndMinControl Enable="true" Range="-50"/>
-							<SoftEndMaxControl Enable="true" Range="1000"/>
+							<SoftEndMaxControl Enable="true" Range="1200"/>
 							<Inc RefSearchInverse="true" RefSyncInverse="false" RefSoftSyncMask="#x00000fff"/>
+							<ParameterChanged>14</ParameterChanged>
 						</EncPara>
 						<Vars VarGrpType="1">
 							<Name>Inputs</Name>
@@ -1828,6 +1833,7 @@ External Setpoint Generation:
 					</Drive>
 					<Controller Name="Ctrl" CtrType="1">
 						<CtrPara PriorControlFactor="1">
+							<PosDiffControl Range="10"/>
 							<Observer BandWidth="20"/>
 						</CtrPara>
 					</Controller>

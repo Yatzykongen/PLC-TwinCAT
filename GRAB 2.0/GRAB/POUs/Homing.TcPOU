@@ -41,7 +41,7 @@ HOME_SNAKE:
 		Busy=> ,
 		Active=> ,
 		Error=> ,
-		ErrorID=> HAVL.currentError
+		ErrorID=> HAVL.currentErrorPower
 	);
 	
 	HAVL.axisHome(
@@ -57,7 +57,7 @@ HOME_SNAKE:
 		Active=> ,
 		CommandAborted=> ,
 		Error=> ,
-		ErrorID=> HAVL.currentError
+		ErrorID=> HAVL.currentErrorCommand
 	);
 	
 	IF HAVL.running AND NOT(HAVL.busy) AND NOT(horAxisHomingDone) THEN
@@ -94,7 +94,7 @@ HOME_SNAKEBOX:
 		Busy=> ,
 		Active=> ,
 		Error=> ,
-		ErrorID=> RAVL.currentError
+		ErrorID=> RAVL.currentErrorPower
 	);
 	
 	RAVL.axisHome(
@@ -110,7 +110,7 @@ HOME_SNAKEBOX:
 		Active=> ,
 		CommandAborted=> ,
 		Error=> ,
-		ErrorID=> RAVL.currentError
+		ErrorID=> RAVL.currentErrorCommand
 	);
 	
 	IF RAVL.running AND NOT(RAVL.busy) AND NOT(rotAxisHomingDone) THEN
@@ -150,7 +150,7 @@ HOME_VERTICAL:
 		Busy=> ,
 		Active=> ,
 		Error=> ,
-		ErrorID=> VAVL.currentError
+		ErrorID=> VAVL.currentErrorPower
 	);
 	
 	VAVL.axisHome(
@@ -166,7 +166,7 @@ HOME_VERTICAL:
 		Active=> ,
 		CommandAborted=> ,
 		Error=> ,
-		ErrorID=> VAVL.currentError
+		ErrorID=> VAVL.currentErrorCommand
 	);
 	
 	IF VAVL.running AND NOT(timerOn) AND NOT(VAVL.busy) AND NOT(verAxisHomingDone) THEN

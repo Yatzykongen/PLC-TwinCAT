@@ -28,13 +28,15 @@ VAR_GLOBAL
 	done: BOOL := FALSE;
 	resetError: BOOL := FALSE;
 	currentError: UDINT;
+	currentErrorPower: UDINT;
+	currentErrorCommand: UDINT;
 	
 	lastClockwise: BOOL := FALSE;
 	lastCounterClockwise: BOOL := FALSE;
 	
 	endStop AT %I*: BOOL;
 	
-	homePosition: LREAL := 70;
+	homePosition: LREAL := 80;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

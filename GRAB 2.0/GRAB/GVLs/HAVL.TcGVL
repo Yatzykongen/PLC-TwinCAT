@@ -28,6 +28,8 @@ VAR_GLOBAL
 	done: BOOL := FALSE;
 	resetError: BOOL := FALSE;
 	currentError: UDINT;
+	currentErrorPower: UDINT;
+	currentErrorCommand: UDINT;
 	
 	lastExtend: BOOL := FALSE;
 	lastRetract: BOOL := FALSE;

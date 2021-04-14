@@ -30,7 +30,7 @@ RAVL.axisPower(
 	Busy=> ,
 	Active=> ,
 	Error=> ,
-	ErrorID=> RAVL.currentError
+	ErrorID=> RAVL.currentErrorPower
 );
 
 RAVL.axisMoveManual(
@@ -48,7 +48,7 @@ RAVL.axisMoveManual(
 	Active=> ,
 	CommandAborted=> ,
 	Error=> ,
-	ErrorID=> RAVL.currentError
+	ErrorID=> RAVL.currentErrorCommand
 );
 
 IF RAVL.busy THEN
