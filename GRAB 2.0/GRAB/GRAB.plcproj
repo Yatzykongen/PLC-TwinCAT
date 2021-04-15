@@ -75,6 +75,9 @@
     <Compile Include="POUs\RunGRAB.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\Stop.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Visualization Manager.TcVMO">
       <SubType>Code</SubType>
     </Compile>

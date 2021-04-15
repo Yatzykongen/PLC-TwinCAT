@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
+  <POU Name="Stop" Id="{5beeff94-a737-42d7-90a2-c5f2cb3cb0e5}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Stop
+VAR
+END_VAR
+VAR CONSTANT 
+    STOP_ALL_AXIS: INT := 1;
+	RESET_STOP: INT := 2;
+END_VAR ]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[HAVL.axis.ReadStatus();
+RAVL.axis.ReadStatus();
+VAVL.axis.ReadStatus();
+
+HAVL.axisStop(
+	Axis:=HAVL.axis,
+	Execute:=HAVL.execute,
+	Deceleration:=100,
+	Jerk:=5000,
+	Options:=,
+	Done=>,
+	Busy=>,
+	Active=>,
+	CommandAborted=>,
+	Error=>,
+	ErrorID=>
+	);
+	
+RAVL.axisStop(
+	Axis:=RAVL.axis,
+	Execute:=RAVL.execute,
+	Deceleration:=100,
+	Jerk:=5000,
+	Options:=,
+	Done=>,
+	Busy=>,
+	Active=>,
+	CommandAborted=>,
+	Error=>,
+	ErrorID=>
+	);
+	
+VAVL.axisStop(
+	Axis:=VAVL.axis,
+	Execute:=VAVL.execute,
+	Deceleration:=100,
+	Jerk:=5000,
+	Options:=,
+	Done=>,
+	Busy=>,
+	Active=>,
+	CommandAborted=>,
+	Error=>,
+	ErrorID=>
+	);
+
+
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="Stop">
+      <LineId Id="5" Count="0" />
+      <LineId Id="21" Count="1" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="8" Count="11" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="23" Count="11" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="36" Count="11" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="66" Count="1" />
+      <LineId Id="64" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

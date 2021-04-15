@@ -1700,20 +1700,23 @@ External Setpoint Generation:
 				<Axis Id="5" CreateSymbols="true" AxisType="1" GroupId="3">
 					<Name>VerticalAxis</Name>
 					<AxisPara>
-						<Dynamic AccelerationMaximum="50" DecelerationMaximum="50" Acceleration="100" Deceleration="120" Jerk="6000"/>
-						<Velo RefSearch="50" RefSync="10" SlowManual="200" FastManual="200" Maximum="300"/>
-						<PositionAreaControl Range="10"/>
-						<PEHControl Time="10"/>
+						<Dynamic AccelerationMaximum="50" DecelerationMaximum="50" Acceleration="80" Deceleration="120" Jerk="6000"/>
+						<Velo RefSearch="50" RefSync="10" SlowManual="150" FastManual="150" Maximum="200"/>
 						<OtherSettings AllowMotionCmdToSlave="true"/>
+						<ParameterChanged>42</ParameterChanged>
+						<ParameterChanged>8</ParameterChanged>
+						<ParameterChanged>39</ParameterChanged>
+						<ParameterChanged>19</ParameterChanged>
 						<ParameterChanged>257</ParameterChanged>
-						<ParameterChanged>259</ParameterChanged>
+						<ParameterChanged>16</ParameterChanged>
+						<ParameterChanged>18</ParameterChanged>
+						<ParameterChanged>9</ParameterChanged>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="19">
 						<EncPara ScaleFactorNumerator="0.004208" Inverse="true" MaxCount="#xffffffff">
 							<SoftEndMinControl Enable="true" Range="-50"/>
 							<SoftEndMaxControl Enable="true" Range="1200"/>
 							<Inc RefSearchInverse="true" RefSyncInverse="false" RefSoftSyncMask="#x00000fff"/>
-							<ParameterChanged>14</ParameterChanged>
 						</EncPara>
 						<Vars VarGrpType="1">
 							<Name>Inputs</Name>
@@ -1775,7 +1778,7 @@ External Setpoint Generation:
 					</Encoder>
 					<Drive Name="Drive" DrvType="16">
 						<DrvPara Inverse="true" MaxCount="#xffffffff" DriveControlDWord="#x00020000">
-							<Analog VeloReferenz="200" TorqueSetpointScale="10" ScaleFactorActTorque="0.1"/>
+							<Analog VeloReferenz="150" TorqueSetpointScale="10" ScaleFactorActTorque="0.1"/>
 							<TimeComp TaskDelayCycles="1"/>
 						</DrvPara>
 						<Vars VarGrpType="1">
@@ -1833,7 +1836,7 @@ External Setpoint Generation:
 					</Drive>
 					<Controller Name="Ctrl" CtrType="1">
 						<CtrPara PriorControlFactor="1">
-							<PosDiffControl Range="10"/>
+							<PosDiffControl Time="0.05"/>
 							<Observer BandWidth="20"/>
 						</CtrPara>
 					</Controller>

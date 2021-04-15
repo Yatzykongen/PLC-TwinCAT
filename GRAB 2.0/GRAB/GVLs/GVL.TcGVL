@@ -9,6 +9,8 @@ VAR_GLOBAL
 	
 	homingState: INT := 1;
 	homingDone: BOOL := FALSE;
+	
+	stop: BOOL := FALSE;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

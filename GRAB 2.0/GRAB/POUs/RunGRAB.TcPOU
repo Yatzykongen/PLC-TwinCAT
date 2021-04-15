@@ -9,11 +9,14 @@ VAR CONSTANT
     HOMING: INT := 1;
 	MANUAL: INT := 2;
 	POSITION: INT := 3;
-	STOP: INT := 4;
 END_VAR 
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// State machine
+      <ST><![CDATA[IF(HAVL.stopped OR RAVL.stopped OR VAVL.stopped) THEN
+	GVL.stateGRAB := 0;
+END_IF
+
+// State machine
 CASE GVL.stateGRAB OF
 HOMING:
 	.Homing();
@@ -27,15 +30,57 @@ POSITION:
 	.PositionHorAxis();
 	.PositionRotAxis();
 	.PositionVerAxis();
-	
-STOP:
-	//SAMELUR
 
 ELSE
 	// GRAB waiting for command
-END_CASE]]></ST>
+END_CASE
+
+HAVL.axisStop(
+	Axis:=HAVL.axis,
+	Execute:=GVL.stop,
+	Deceleration:=100,
+	Jerk:=5000,
+	Options:=,
+	Done=>,
+	Busy=>HAVL.stopped,
+	Active=>,
+	CommandAborted=>,
+	Error=>,
+	ErrorID=>
+	);
+	
+RAVL.axisStop(
+	Axis:=RAVL.axis,
+	Execute:=GVL.stop,
+	Deceleration:=100,
+	Jerk:=5000,
+	Options:=,
+	Done=>,
+	Busy=>RAVL.stopped,
+	Active=>,
+	CommandAborted=>,
+	Error=>,
+	ErrorID=>
+	);
+	
+VAVL.axisStop(
+	Axis:=VAVL.axis,
+	Execute:=GVL.stop,
+	Deceleration:=100,
+	Jerk:=5000,
+	Options:=,
+	Done=>,
+	Busy=>VAVL.stopped,
+	Active=>,
+	CommandAborted=>,
+	Error=>,
+	ErrorID=>
+	);]]></ST>
     </Implementation>
     <LineIds Name="RunGRAB">
+      <LineId Id="175" Count="0" />
+      <LineId Id="179" Count="1" />
+      <LineId Id="176" Count="0" />
       <LineId Id="5" Count="1" />
       <LineId Id="8" Count="0" />
       <LineId Id="13" Count="0" />
@@ -48,12 +93,13 @@ END_CASE]]></ST>
       <LineId Id="55" Count="0" />
       <LineId Id="68" Count="0" />
       <LineId Id="80" Count="0" />
-      <LineId Id="38" Count="1" />
-      <LineId Id="43" Count="0" />
       <LineId Id="40" Count="0" />
       <LineId Id="14" Count="0" />
       <LineId Id="16" Count="0" />
       <LineId Id="9" Count="0" />
+      <LineId Id="174" Count="0" />
+      <LineId Id="133" Count="39" />
+      <LineId Id="91" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

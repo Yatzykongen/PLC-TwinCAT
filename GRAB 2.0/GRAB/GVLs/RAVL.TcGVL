@@ -10,6 +10,7 @@ VAR_GLOBAL
 	axisReadActualPosition: MC_ReadActualPosition;
 	axisMoveManual: MC_Jog;
 	axisHome: MC_Home;
+	axisStop: MC_Stop;
 	
 	enable: BOOL := FALSE;
 	override: LREAL := 100;
@@ -30,6 +31,7 @@ VAR_GLOBAL
 	currentError: UDINT;
 	currentErrorPower: UDINT;
 	currentErrorCommand: UDINT;
+	stopped: BOOL := FALSE;
 	
 	lastClockwise: BOOL := FALSE;
 	lastCounterClockwise: BOOL := FALSE;
